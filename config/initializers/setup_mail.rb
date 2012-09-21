@@ -10,3 +10,5 @@ ActionMailer::Base.smtp_settings = {
   :authentication       => :login,
   :enable_starttls_auto => true
 }
+
+ActionMailer::Base.default_url_options[:host] = "rocky-anchorage-8306.herokuapp.com"
