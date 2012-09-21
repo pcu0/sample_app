@@ -18,17 +18,24 @@
 </div>
   
 <% else %>
+  <div class="row">
+  	<aside class="span10">
+  		<div class="center hero-unit">
+    		<h1>Micropost</h1>
 
-  <div class="center hero-unit">
-    <h1>Micropost</h1>
+    		<h2>
+      			Follow and be followed by people in your life.
+    		</h2>
 
-    <h2>
-      Follow and be followed by people in your life.
-    </h2>
-
-    <%= link_to "Sign up now!", signup_path, 
-                                class: "btn btn-large btn-primary" %>
+   			 <%= link_to "Sign up now!", signup_path, 
+                               class: "btn btn-large btn-primary" %>
+  		</div>
+  	</aside>
+	<aside class="span2">
+		<h3>Login!</h3>
+		<%= render 'sessions/short_signin_form'%>
+	</aside>
   </div>
-
+  
   <%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
 <% end %> 

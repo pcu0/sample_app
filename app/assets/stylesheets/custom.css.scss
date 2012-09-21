@@ -186,6 +186,35 @@ input, textarea, select, .uneditable-input {
   @include box_sizing;
 }
 
+.checkbox, .radio {
+  width: 19px;
+  height: 25px;
+  padding: 5px 0 0;
+  display: block;
+  clear: left;
+  float: right;
+}
+
+.short_form {
+  input, textarea, select, .uneditable-input {
+      border: 1px solid #bbb;
+      width: 100%;
+      padding: 1px;
+      height: auto !important;
+      margin-bottom: 5px;
+      //@include box_sizing;
+  }
+  
+  .checkbox, .radio {
+  width: 19px;
+  height: 15px;
+  padding: 5px 0 0;
+  display: block;
+  clear: left;
+  float: right;
+}
+}
+
 #error_explanation {
   color: #f00;
   ul {

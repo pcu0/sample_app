@@ -10,9 +10,11 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :password, :password_confirmation
+  attr_accessible :email, :name, :password, :password_confirmation, :image, :remote_image_url
   has_secure_password
   has_many :microposts
+  
+  mount_uploader :image, AvatarUploader
   
   has_many :microposts, dependent: :destroy
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
@@ -31,8 +33,15 @@ class User < ActiveRecord::Base
             format: { with: VALID_EMAIL_REGEX }, 
             uniqueness: { case_sensitive: false }
             
-  validates :password, presence: true, length: { minimum: 6 }
-  validates :password_confirmation, presence: true
+  validates :password, presence: true, length: { minimum: 6 }, :if => :password_required?
+  validates :password_confirmation, presence: true, :if => :password_required?
+  
+  def send_password_reset
+    generate_token(:password_reset_token)
+    self.password_reset_sent_at = Time.zone.now
+    save!
+    UserMailer.password_reset(self).deliver
+  end
   
   def feed
     Micropost.from_users_followed_by(self)
@@ -50,9 +59,22 @@ class User < ActiveRecord::Base
     relationships.find_by_followed_id(other_user.id).destroy
   end
   
+  protected
+    def password_required?
+      password_digest.nil? || !password.blank?
+    end
+  
   private
 
     def create_remember_token
-      self.remember_token = SecureRandom.urlsafe_base64
+      begin
+        self.remember_token = SecureRandom.urlsafe_base64
+      end while User.exists?(self.remember_token)
+    end
+    
+    def generate_token(column)
+      begin
+        self[column] = SecureRandom.urlsafe_base64
+      end while User.exists?(self[column])
     end
 end
