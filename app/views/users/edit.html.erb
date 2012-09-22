@@ -17,12 +17,37 @@
 
       <%= f.label :password_confirmation, "Confirm Password" %>
       <%= f.password_field :password_confirmation %>
-      
-      <%= f.file_field :image %>
 
-	  <%= f.label :remote_image_url, "or image URL" %>
-      <%= f.text_field :remote_image_url %>
-    
+	  <%= image_tag @user.image_url(:thumb).to_s if @user.image? %>
+	   
+	  <div id="avatar_wrapper">
+	  	  <% if @user.image? %>
+	      	<p id="update_avatar_link"><%= link_to_function("Update/Remove Your Photo", "Effect.SlideUp('avatar_wrapper'); Effect.SlideDown('update_avatar_form')")%></p>
+	      <% else %>
+	      	<p id="add_avatar_link"><%= link_to_function("Add Your Photo!", "Effect.SlideUp('avatar_wrapper'); Effect.SlideDown('update_avatar_form')")%></p>
+	      <% end %>
+	   </div>
+      
+      <div id="update_avatar_form", style="display:none;">
+      	<% if @user.image? %>
+      		<%= f.label :image, "Upload a different photo from your computer" %>
+      	<% else %>
+      		<%= f.label :image, "Add a photo from your computer" %>
+      	<% end %>
+      	
+      	<%= f.file_field :image %>
+	  
+	  	<%= f.label :remote_image_url, "...or from a URL" %>
+      	<%= f.text_field :remote_image_url %>
+      
+      	<% if @user.image? %>
+      		<%= label_tag "Remove Photo" %>
+      		<%= f.check_box :remove_image %>
+      	<% end %>
+      	
+      	<p id="cancel_wrapper"><%= link_to_function("Cancel", "Effect.SlideUp('update_avatar_form'); Effect.SlideDown('avatar_wrapper')")%></p>
+      </div>
+      
       <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
 
 	<% end %>

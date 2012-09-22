@@ -10,7 +10,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :password, :password_confirmation, :image, :remote_image_url
+  attr_accessible :email, :name, :password, :password_confirmation, :image, :remote_image_url, :remove_image
   has_secure_password
   has_many :microposts
   
