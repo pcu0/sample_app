@@ -20,7 +20,7 @@ SampleApp::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
-  config.assets.precompile += [ 'prototype.js', 'scriptaculous.js']
+  config.assets.precompile += [ 'prototype.js', 'scriptaculous.js', 'builder.js', 'controls.js', 'dragdrop.js', 'effects.js', 'slider.js', 'unittest.js', 'sound.js']
 
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
